@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:simpleType name="BlockDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RUN"  />
+      <xs:enumeration value="BOOLEAN" />
+      <xs:enumeration value="INT_8"   />
+      <xs:enumeration value="INT_16"  />
+      <xs:enumeration value="INT_32"  />
+      <xs:enumeration value="INT_64"  />
+      <xs:enumeration value="UINT_8"  />
+      <xs:enumeration value="UINT_16" />
+      <xs:enumeration value="UINT_32" />
+      <xs:enumeration value="UINT_64" />
+      <xs:enumeration value="FLOAT_32"/>
+      <xs:enumeration value="FLOAT_64"/>
+      <xs:enumeration value="ARRAY"   />
+      <xs:enumeration value="TABEL"   />
+      <xs:enumeration value="STRING"  />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="PinDefinition">
+    <xs:attribute name="name" type="xs:token"/>
+    <xs:attribute name="type" type="BlockDataType"/>
+  </xs:complexType>
+
+  <xs:element name="blocks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="structures" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="structure" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:sequence>
+                      <xs:element name="variable" type="PinDefinition" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:token"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="blocks" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="block" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="input" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="pin" type="PinDefinition" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="output" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="pin" type="PinDefinition" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:token"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="script" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="calls" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="call" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="methode" type="xs:token"/>
+                        <xs:attribute name="id"      type="xs:nonNegativeInteger"/>
+                        <xs:attribute name="xpos"    type="xs:int"/>
+                        <xs:attribute name="ypos"    type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="connections" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="connection" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="sourceblock" type="xs:nonNegativeInteger"/>
+                        <xs:attribute name="outputPin"   type="xs:nonNegativeInteger"/>
+                        <xs:attribute name="targetBlock" type="xs:nonNegativeInteger"/>
+                        <xs:attribute name="targetPin"   type="xs:nonNegativeInteger"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="constants" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="constant" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="id"       type="xs:token"/>
+                        <xs:attribute name="dataType" type="BlockDataType"/>
+                        <xs:attribute name="value"    type="xs:token"/>
+                        <xs:attribute name="xpos"     type="xs:int"/>
+                        <xs:attribute name="ypos"     type="xs:int"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:all>
+            <xs:attribute name="name" type="xs:token"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
