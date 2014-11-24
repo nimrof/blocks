@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   }
   else
   {
-    std::cerr << "fatal error: no input file";
+    std::cerr << "fatal error: no input file" << std::endl;
   }
   //return a.exec();
 }
