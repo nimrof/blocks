@@ -10,12 +10,11 @@ class simpleCompiler : public compiler
 public:
   simpleCompiler();
   virtual void configure(QCoreApplication& a);
-  virtual bool compile(const blocks::project* pro);
+  virtual bool DoCompile(const blocks::project* pro);
   bool compileScript(const blocks::script &s, QDataStream &ps, QDataStream &ds);
   bool generateCalllist(const blocks::script* s, std::vector <blocks::itemID> &callList);
 private:
   int     bitSize;
-  QString outputPath;
   bool    makeDebugfile;
   QString debugOutputPath;
 };

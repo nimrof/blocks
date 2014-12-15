@@ -155,7 +155,7 @@ void project::saveFile(const QString path, const int version)
 }
 bool project::xsdValidateFile(const QString path, QString &error)
 {
-  QString xsdpath = "../../../blocksProject.xsd";
+  QString xsdpath = "blocksProject.xsd";
   QFile schemaFile(xsdpath);
   schemaFile.open(QFile::ReadOnly | QFile::Text);
 

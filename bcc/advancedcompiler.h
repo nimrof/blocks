@@ -8,7 +8,7 @@ class advancedCompiler : public compiler
 public:
   advancedCompiler();
   virtual void configure(QCoreApplication& a);
-  virtual bool compile(const blocks::project* pro);
+  virtual bool DoCompile(const blocks::project* pro);
 };
 
 #endif // ADVANCEDCOMPILER_H

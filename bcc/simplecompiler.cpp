@@ -15,14 +15,13 @@ simpleCompiler::simpleCompiler()
 }
 void simpleCompiler::configure(QCoreApplication& a)
 {
-  outputPath = a.property("output").toString();
-
   a.property("outputIndexSize");
   a.property("outputDebugfile");
 }
-bool simpleCompiler::compile(const blocks::project* pro)
+bool simpleCompiler::DoCompile(const blocks::project* pro)
 {
   QStringList scriptNames = pro->getScriptList();
+  programData.writeRawData("BLOC",4);
 
   int numScripts = scriptNames.count();
 
@@ -43,7 +42,6 @@ bool simpleCompiler::compile(const blocks::project* pro)
     compileScript(*s,programData, debugData);
   }
 
-  programData << "BLOC";
   return true;
 }
 bool simpleCompiler::compileScript(const blocks::script &s, QDataStream &ps, QDataStream &ds)
@@ -51,6 +49,6 @@ bool simpleCompiler::compileScript(const blocks::script &s, QDataStream &ps, QDa
   std::vector<blocks::itemID> callList;
   metaScript script;
   script.makeFromScript(s);
-
+  //todo: print the code to binary
   return true;
 }

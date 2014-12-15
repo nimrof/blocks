@@ -47,15 +47,15 @@ OTHER_FILES +=
 RESOURCES += \
     default.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/ -lQtBlocksLib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/ -lQtBlocksLibd
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/release/ -lQtBlocksLib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/debug/ -lQtBlocksLib
 else:unix: LIBS += -L$$OUT_PWD/../QtBlocksLib/ -lQtBlocksLib
 
 INCLUDEPATH += $$PWD/../QtBlocksLib
 DEPENDPATH += $$PWD/../QtBlocksLib
 
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/libQtBlocksLib.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/libQtBlocksLibd.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/QtBlocksLib.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/QtBlocksLibd.lib
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/release/libQtBlocksLib.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/debug/libQtBlocksLib.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/release/QtBlocksLib.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/debug/QtBlocksLib.lib
 else:unix: PRE_TARGETDEPS += $$OUT_PWD/../QtBlocksLib/libQtBlocksLib.a
