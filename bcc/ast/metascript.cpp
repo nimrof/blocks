@@ -97,7 +97,7 @@ bool metaScript::walkTree(const blocks::script &s)
   }
   return true;
 }
-void metaScript::walkBlock(const blocks::script &s, std::vector<bool> &doneID, const blocks::itemID blockID, metaLine &branch)
+void metaScript::walkBlock(const blocks::script &s, std::vector<bool> &doneID, const blocks::itemID blockID, astElement &branch)
 {
   doneID.at(blockID) = true;
   branch.children.push_back( allocateLineForBlock(s,blockID) );
@@ -208,9 +208,9 @@ std::vector<blocks::itemID> metaScript::positionBasedSort(const std::vector<bloc
   }
   return sortedList;
 }
-metaLine* metaScript::allocateLineForBlock(const blocks::script &s, const blocks::itemID blockID)
+astElement* metaScript::allocateLineForBlock(const blocks::script &s, const blocks::itemID blockID)
 {
-  metaLine* resultLine = 0;
+  astElement* resultLine = 0;
   blocks::block const* b = s.getBlock(blockID);
 
   switch( b->type() )
@@ -222,7 +222,7 @@ metaLine* metaScript::allocateLineForBlock(const blocks::script &s, const blocks
 
         blocks::itemID NumPins = definition->getNumPinsOfType(blocks::output);
 
-        metaCall* callLine = new metaCall(*callBlock, varSource2VarID);
+        astFunctionCall* callLine = new astFunctionCall(*callBlock, varSource2VarID);
 
         bool branches = false;
         for(blocks::itemID p = 0; p < NumPins; p++)
@@ -247,21 +247,21 @@ metaLine* metaScript::allocateLineForBlock(const blocks::script &s, const blocks
   }
   return resultLine;
 }
-void metaScript::printBranch(const int indent, const metaLine &b)
+void metaScript::printBranch(const int indent, const astElement &b)
 {
-  //metaLine->curLine
+  //astElement->curLine
   //  while()
 
-  for (std::vector<metaLine*>::const_iterator it = b.children.begin() ; it != b.children.end(); ++it)
+  for (std::vector<astElement*>::const_iterator it = b.children.begin() ; it != b.children.end(); ++it)
   {
     std::cout << std::string(indent, '-');
 
-    metaLine* l = (*it);
+    astElement* l = (*it);
     switch(l->type)
     {
-      case metaLine::_call:
+      case astElement::_functioncall:
         {
-          metaCall* c = static_cast<metaCall*>(l);
+          astFunctionCall* c = static_cast<astFunctionCall*>(l);
           std::cout << (char*)c->functionName.toLocal8Bit().data();
 
           std::cout << "  \t";
@@ -293,13 +293,7 @@ void metaScript::printBranch(const int indent, const metaLine &b)
           }
         }
         break;
-      case metaLine::_branching:
-        break;
-      case metaLine::_while:
-        break;
-      case metaLine::_for:
-        break;
-      case metaLine::_switch:
+      case astElement::_branch:
         break;
     }
 
@@ -309,8 +303,8 @@ void metaScript::printBranch(const int indent, const metaLine &b)
 }
 void metaScript::mapVariableUsage()
 {
-  std::vector<metaLine*>               variableCreated;
-  std::vector<std::vector<metaLine*> > variableRead;
+  std::vector<astElement*>               variableCreated;
+  std::vector<std::vector<astElement*> > variableRead;
 
   size_t numVariables = variables.size();
   variableCreated.resize( numVariables );
@@ -332,14 +326,14 @@ void metaScript::mapVariableUsage()
     }
   }
 }
-void metaScript::mapVariableLifeInBranch(const blocks::itemID variableIndex, metaLine** created, std::vector <metaLine*> &read, metaLine &b)
+void metaScript::mapVariableLifeInBranch(const blocks::itemID variableIndex, astElement** created, std::vector <astElement*> &read, astElement &b)
 {/*
-  for (std::vector<metaLine*>::const_iterator it = b.begin() ; it != b.end(); ++it)
+  for (std::vector<astElement*>::const_iterator it = b.begin() ; it != b.end(); ++it)
   {
-    metaLine* l = (*it);
+    astElement* l = (*it);
     switch(l->type)
     {
-      case metaLine::_call:
+      case astElement::_call:
         {
           metaCall* c = static_cast<metaCall*>(l);
           for (std::vector<blocks::itemID>::const_iterator v = c->inVariable.begin() ; v != c->inVariable.end(); ++v)
@@ -358,13 +352,13 @@ void metaScript::mapVariableLifeInBranch(const blocks::itemID variableIndex, met
           }
         }
         break;
-      case metaLine::_branching:
+      case astElement::_branching:
         break;
-      case metaLine::_while:
+      case astElement::_while:
         break;
-      case metaLine::_for:
+      case astElement::_for:
         break;
-      case metaLine::_switch:
+      case astElement::_switch:
         break;
     }
   }*/

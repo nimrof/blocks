@@ -8,7 +8,7 @@ QT       += core xml xmlpatterns
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT       -= gui
 
-TARGET = bcc
+TARGET   = bcc
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -19,10 +19,11 @@ SOURCES += main.cpp \
     simplecompiler.cpp \
     advancedcompiler.cpp \
     advancedthreadedcompiler.cpp \
-    metascript/metascript.cpp \
-    metascript/metaline.cpp \
-    metascript/metacall.cpp \
-    metascript/metaif.cpp
+    ast/metascript.cpp \
+    ast/metabranch.cpp \
+    ast/astElement.cpp \
+    ast/astBranshIf.cpp \
+    ast/astFunctionCall.cpp
 
 HEADERS += \
     main.h \
@@ -30,17 +31,11 @@ HEADERS += \
     simplecompiler.h \
     advancedcompiler.h \
     advancedthreadedcompiler.h \
-    metascript/metascript.h \
-    metascript/metaline.h \
-    metascript/metacall.h \
-    metascript/metaif.h \
-    metascript/metabranch.h
-
-HEADERS += \
-    metascript/metabranch.h
-
-SOURCES += \
-    metascript/metabranch.cpp
+    ast/metascript.h \
+    ast/astElement.h \
+    ast/astbranch.h \
+    ast/astBranshIf.h \
+    ast/astFunctionCall.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/release/ -lQtBlocksLib
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/debug/ -lQtBlocksLib

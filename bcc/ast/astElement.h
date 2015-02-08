@@ -1,5 +1,5 @@
-#ifndef METALINE_H
-#define METALINE_H
+#ifndef ASTELEMENT_H
+#define ASTELEMENT_H
 
 #include "blocks.h"
 #include <vector>
@@ -27,27 +27,22 @@ struct outputVariableSource
   }
 };
 
-class metaLine
+class astElement
 {
 public:
-  metaLine();
+  astElement();
   enum _type
   {
     _noop,//no-op.....does nothing
-    _call,
-    _if,
-    _while,
-    _for,
-    _for_each,
-    _switch,
-    _branching
+    _functioncall,
+    _branch,
   };
   _type type;
 
   blocks::itemID blockID;
   std::vector <blocks::itemID> currentVariableUsage;//variable usage at this point in the script
-  std::vector <metaLine*> parents;//can be multiple when branches meets
-  std::vector <metaLine*> children;//can be multiple when branches......are branching?
+  std::vector <astElement*> parents;//can be multiple when branches meets
+  std::vector <astElement*> children;//can be multiple when branches......are branching?
 };
 
-#endif // METALINE_H
+#endif // ASTELEMENT_H

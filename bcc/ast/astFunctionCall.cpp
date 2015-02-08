@@ -1,18 +1,18 @@
-#include "metacall.h"
+#include "astFunctionCall.h"
 #include "calldefinition.h"
 #include "pin.h"
 
 #include <map>
 #include <iostream>
 
-metaCall::metaCall()
+astFunctionCall::astFunctionCall()
 {
-  type = _call;
+  type = _functioncall;
 }
 
-metaCall::metaCall(const blocks::call &c, const std::map<outputVariableSource, blocks::itemID> &varSource2VarID)
+astFunctionCall::astFunctionCall(const blocks::call &c, const std::map<outputVariableSource, blocks::itemID> &varSource2VarID)
 {
-  type = _call;
+  type = _functioncall;
   functionName = c.getcallDefinition()->getFullName();
   blockID = c.getID();
 
