@@ -8,7 +8,7 @@
 #include "block.h"
 #include "pin.h"
 
-#include "metascript/metascript.h"
+#include "ast/metascript.h"
 
 simpleCompiler::simpleCompiler()
 {

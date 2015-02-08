@@ -7,18 +7,18 @@
 #include <map>
 #include <vector>
 
-#include "metaline.h"
-#include "metacall.h"
-#include "metabranch.h"
+#include "astElement.h"
+#include "astFunctionCall.h"
+#include "astBranch.h"
 
-class metaWhile : public metaLine
+class metaWhile : public astElement
 {
 public:
   blocks::itemID         conditionVariable;
-  std::vector<metaLine*> lines;
+  std::vector<astElement*> lines;
 };
 
-class metaSwitch : public metaLine
+class metaSwitch : public astElement
 {
   //TODO
 };
@@ -26,7 +26,7 @@ class metaSwitch : public metaLine
 class metaScript
 {
 public:
-  typedef std::vector<metaLine*> branch;
+  typedef std::vector<astElement*> branch;
   struct variableEntry
   {
     blocks::dataType          type;
@@ -38,23 +38,23 @@ public:
   bool makeFromScript(const blocks::script &s);
 private:
   bool walkTree(const blocks::script &s);
-  void walkBlock(const blocks::script &s, std::vector<bool> &doneID, const blocks::itemID blockID, metaLine &branch);
+  void walkBlock(const blocks::script &s, std::vector<bool> &doneID, const blocks::itemID blockID, astElement &branch);
 
   void registerVariables(const blocks::script &s);
   blocks::itemID getVariableIDfromBlockID(blocks::itemID constBlockID);
 
   bool blockInputVariablesReady(const std::vector<bool> doneIDs, const blocks::script &s, blocks::itemID blockID);
   std::vector<blocks::itemID> positionBasedSort(const std::vector<blocks::itemID> list, const blocks::script &s);
-  metaLine* allocateLineForBlock(const blocks::script &s, const blocks::itemID blockID);
+  astElement* allocateLineForBlock(const blocks::script &s, const blocks::itemID blockID);
   void mapVariableUsage();
 
-  void printBranch(const int indent, const metaLine &b);
-  void mapVariableLifeInBranch(const blocks::itemID variableIndex, metaLine** created, std::vector <metaLine*> &read, metaLine &b);
+  void printBranch(const int indent, const astElement &b);
+  void mapVariableLifeInBranch(const blocks::itemID variableIndex, astElement** created, std::vector <astElement*> &read, astElement &b);
 
   std::vector<variableEntry>                     variables;
   std::map<outputVariableSource, blocks::itemID> varSource2VarID;
 
-  metaLine mainBranch;
+  astElement mainBranch;
 //  std::vector<metaLine*> mainBranch;
 };
 
