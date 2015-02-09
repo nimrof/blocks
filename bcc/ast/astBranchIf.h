@@ -1,7 +1,7 @@
 #ifndef METAIF_H
 #define METAIF_H
 
-#include "metaline.h"
+#include "astElement.h"
 
 #include <map>
 
