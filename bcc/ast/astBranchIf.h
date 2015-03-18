@@ -5,12 +5,12 @@
 
 #include <map>
 
-class metaIf : public metaLine
+class astIf : public astElement
 {
 public:
-  metaIf();
+  astIf();
   //metaCall branchingBlock;
-  std::map<blocks::itemID, std::vector<metaLine*> > branches;//branchPin and the branch itself
+  std::map<blocks::itemID, std::vector<astElement*> > branches;//branchPin and the branch itself
 };
 
 #endif // METAIF_H

@@ -1,6 +1,7 @@
-#include "astBranshIf.h"
+#include "astBranchIf.h"
+#include "astbranch.h"
 
 astIf::astIf()
 {
-  type = _if;
+  type = _branch;
 }

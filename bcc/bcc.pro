@@ -22,7 +22,7 @@ SOURCES += main.cpp \
     ast/metascript.cpp \
     ast/metabranch.cpp \
     ast/astElement.cpp \
-    ast/astBranshIf.cpp \
+    ast/astBranchIf.cpp \
     ast/astFunctionCall.cpp
 
 HEADERS += \
@@ -34,7 +34,7 @@ HEADERS += \
     ast/metascript.h \
     ast/astElement.h \
     ast/astbranch.h \
-    ast/astBranshIf.h \
+    ast/astBranchIf.h \
     ast/astFunctionCall.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../QtBlocksLib/release/ -lQtBlocksLib
